@@ -1,0 +1,13 @@
+# Ignore temporary files
+*~
+
+# Ignore build artifacts
+/build/
+/dist/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore local configuration files
+.env
+.env.local

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>My Life</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <section>
+        <div class="flex flex-col p-5 rounded-lg">
+          <div class="bg-slate-100 p-5 shadow-lg rounded-lg m-auto" id="modalGender">
+            <h1 class="text-center from-neutral-800 font-semibold text-2xl pb-4">Start play, choose a gender</h1>
+              <div class="flex flex-row gap-5 justify-center pt-2 pb-5 text-1xl">
+                <button class="bg-blue-300 px-5 py-1 shadow-md rounded-lg hover:bg-blue-500 text-gray-100 transition-all" type="submit" title="Gender: Man" id="btnMan">Man</button>
+                <button class="bg-pink-400 px-3 py-1 shadow-md rounded-lg hover:bg-pink-500 text-gray-100 transition-all" type="submit" title="Gender: Woman" id="btnWoman">Woman</button>
+              </div>
+              <button class="bg-green-500 px-3 py-1 rounded-lg text-1xl" type="button" title="Next page" id="btnNext">Next</button>
+              <p class="text-center pb-5 text-1xl" id="text-gender"></p>
+          </div>
+        </div>
+    </section>
+    
+    <section>
+      <div class="flex flex-col m-auto p-5 max-w-screen-md">
+        <div class="bg-slate-100 p-5 shadow-lg rounded-lg" id="formUser">
+          <h1 class="text-center from-neutral-800 font-bold">Welcome to
+            <span class="font-bold text-yellow-300 hover:text-yellow-400 transition-all cursor-pointer">myLife</span>
+          , please fill the form.
+          </h1>
+          <form class="flex flex-col gap-5 pt-5" method="post" action="">
+            <label for="fullName">Full Name:
+              <input type="text" id="fullName" required />
+            </label>
+            <label for="userName">Username:
+              <input type="text" id="userName" required />
+            </label>
+            <label for="age">Age:
+              <input type="number" id="age" min="1" max="100" required />
+            </label>
+            <label for="gender">Gender selected:
+              <input type="text" id="gender" value="" required disabled />
+            </label>
+            <label for="money">Money:
+              <input type="number" id="money" value="0" required disabled />
+            </label>
+            <label for="workExp">Work experience:
+              <input type="number" id="workExp" value="0" required disabled />
+            </label>
+            <label for="health">Health:
+              <input type="number" id="health" value="100" required disabled />
+            </label>
+            <label>Married:
+              Yes <input type="radio" id="mTrue" /> 
+              No <input type="radio" id="mFalse" />
+            </label>
+            <button class="bg-green-500 px-5 py-1 shadow-md rounded-lg hover:bg-green-600 transition-all" type="submit" title="Submit datas" id="btnSubmitForm">Submit</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script type="module" src="/public/js/config.js"></script>
+    <script type="module" src="/public/js/elements.js"></script>
+    <script type="module" src="/public/js/life.js"></script>
+  </body>
+</html>
