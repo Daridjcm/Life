@@ -1,7 +1,7 @@
 // Elements (inputs)
 import { inputFullName, inputUserName, inputAge, inputGender, inputMoney, inputWorkExp, inputHealth, textGender, btnMan, btnWoman, modalForm, modalGender } from './elements.js';
 
-class Person {
+export class Person {
     constructor(fullName, userName, gender, age, money, workExp, health, married) {
         this.fullName = fullName;
         this.userName = userName;
@@ -12,7 +12,7 @@ class Person {
         this.health = health;
         this.married = married;
     }
-    
+
     getValues() {
         const updateMarriedStatus = () => {
             let IDMarriedTrue = document.getElementById("mTrue");
@@ -44,60 +44,22 @@ class Person {
         localStorage.setItem('User', JSON.stringify(this));
     }
 
-    // // Método para cargar datos desde el almacenamiento local
-    // static loadFromLocalStorage() {
-    //     const data = JSON.parse(localStorage.getItem('Person'));
-    //     if (data) {
-    //         return new Person(data.fullName, data.userName, data.gender, data.age, data.money, data.workExp, data.health, data.married);
-    //     } else {
-    //         return null;
-    //     }
-    // }
+    // Load datas from local storage
+    loadFromLocalStorage() {
+        const data = JSON.parse(localStorage.getItem('User'));
+        console.log(data);
+        if (data) {
+            return new Person(data.fullName, data.userName, data.gender, data.age, data.money, data.workExp, data.health, data.married);
+        } else {
+            return null;
+        }
+    }
 }
 
-class Functions {
-    constructor(person) {
-        this.person = person;
-    }
-
-    checkAll() {
-        const checkFullName = () => this.person.fullName;
-        checkFullName();
-
-        const checkAge = () => {
-            switch (true) {
-                case this.person.age >= 50:
-                    return 'You are an adult, a old.';
-                case this.person.age >= 30 && this.person.age < 50:
-                    return "You're in your prime, your knees already hurt.";
-                case this.person.age >= 18 && this.person.age < 30:
-                    return 'You are an adult.';
-                case this.person.age >= 13 && this.person.age < 18:
-                    return 'You are a teenager.';
-                default:
-                    return "Don't you have an age? We will send you to write your age";
-            }
-        }
-        checkAge();
-
-        const checkMoney = () => this.person.money <= 0 ?
-            "You don't have money, sorry. Try again later." :
-            `Great! You do have money, your credit is: ${this.person.money} USD.`;
-        checkMoney();
-
-        const checkHealth = () => {
-            let healthStatus = this.person.health < 65 ? 'You are not well,' :
-                'You are doing great! Keep it.';
-            let healthStatus2 = this.person.health < 65 ? 'should go to the hospital.' : '';
-
-            return this.person.health === undefined ? 'No health data provided.' :
-                healthStatus + " " + healthStatus2;
-        }
-        checkHealth();
-
-        const checkStatusMarital = () => this.person.married === 'Yes' ? 'You have married.' : 'You are single.';
-        checkStatusMarital();
-    }
+export const person = new Person();
+export const loadInfo = () => {
+    window.location.href = '/src/pages/home/game.html';
+    person.loadFromLocalStorage();
 }
 
 const btnSubmitForm = document.getElementById('btnSubmitForm');
@@ -106,15 +68,10 @@ btnSubmitForm.addEventListener('click', function (e) {
     
     setTimeout(() => {
         btnSubmitForm.textContent = 'Receive and save datas to local storage...';
-        const person = new Person();
         setTimeout(() => {
             person.getValues();
             person.saveToLocalStorage()
+            loadInfo();
         }, 1000);
-        setTimeout(() => {
-            const functions = new Functions(person);
-            functions.checkAll();
-            window.location.href = '/src/pages/home/game.html';
-        }, 2500);
-    }, 500)
+    }, 500);
 });
