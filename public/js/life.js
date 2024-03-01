@@ -1,7 +1,7 @@
 // Elements (inputs)
-import { inputFullName, inputUserName, inputAge, inputGender, inputMoney, inputWorkExp, inputHealth, textGender, btnMan, btnWoman } from './elements.js';
+import { inputFullName, inputUserName, inputAge, inputGender, inputMoney, inputWorkExp, inputHealth, textGender, btnMan, btnWoman, modalForm, modalGender } from './elements.js';
 
-export class PersonData {
+export class Person {
     constructor(fullName, userName, gender, age, money, workExp, health, married) {
         this.fullName = fullName;
         this.userName = userName;
@@ -14,13 +14,13 @@ export class PersonData {
     }
 
     getValues() {
-        const updateMarriedStatus = (param) => {
+        const updateMarriedStatus = () => {
             let IDMarriedTrue = document.getElementById("mTrue");
             let IDMarriedFalse = document.getElementById("mFalse");
-            
-            if(IDMarriedTrue.checked === true) {
+
+            if (IDMarriedTrue.checked === true) {
                 return 'Yes';
-            } else if(IDMarriedFalse.checked === true) {
+            } else if (IDMarriedFalse.checked === true) {
                 return 'No';
             } else {
                 return 'Not specified.';
@@ -28,6 +28,7 @@ export class PersonData {
         }
 
         const checkGender = (param) => inputGender.value === 'Man' ? this.gender = 'Man' : inputGender.value === 'Woman' ? this.gender = 'Woman' : 'Not specified.';
+
         this.fullName = inputFullName.value;
         this.userName = inputUserName.value;
         this.age = Number(inputAge.value);
@@ -35,67 +36,42 @@ export class PersonData {
         this.money = Number(inputMoney.value);
         this.workExp = Number(inputWorkExp.value);
         this.health = Number(inputHealth.value);
-        this.married = updateMarriedStatus(this.married);    
+        this.married = updateMarriedStatus();
     }
 
-    // Método para guardar los datos en el almacenamiento local
+    // Save object in the local storage
     saveToLocalStorage() {
-        localStorage.setItem('personData', JSON.stringify(this));
+        localStorage.setItem('User', JSON.stringify(this));
     }
-    
-    // Método para cargar datos desde el almacenamiento local
-    static loadFromLocalStorage() {
-        const data = JSON.parse(localStorage.getItem('personData'));
+
+    // Load datas from local storage
+    loadFromLocalStorage() {
+        const data = JSON.parse(localStorage.getItem('User'));
+        console.log(data);
         if (data) {
-            return new PersonData(data.fullName, data.userName, data.gender, data.age, data.money, data.workExp, data.health, data.married);
+            return new Person(data.fullName, data.userName, data.gender, data.age, data.money, data.workExp, data.health, data.married);
         } else {
             return null;
         }
     }
 }
 
-export class Functions extends PersonData {
-    constructor() {
-        super();
-        super.getValues();
-    }
-
-    checkAll() {
-        const checkFullName = () => this.fullName;
-        checkFullName();
-
-        const checkAge = () => {
-            switch (true) {
-                case this.age >= 50:
-                    return 'You are an adult, a old.';
-                case this.age >= 30 && this.age < 50:
-                    return "You're in your prime, your knees already hurt.";
-                case this.age >= 18 && this.age < 30:
-                    return 'You are an adult.';
-                case this.age >= 13 && this.age < 18:
-                    return 'You are a teenager.';
-                default:
-                    return "Don't you have an age? We will send you to write your age";
-            }
-        }
-        checkAge();
-        
-        const checkMoney = () => this.money <= 0 ?
-            "You don't have money, sorry. Try again later." :
-            `Great! You do have money, your credit is: ${this.money} USD.`;
-        checkMoney();    
-
-        const checkHealth = () => {
-            let healthStatus = this.health < 65 ? 'You are not well,' : 
-            'You are doing great! Keep it.';
-            let healthStatus2 = this.health < 65 ? 'should go to the hospital.' : '';
-
-            return this.health === undefined ? 'No health data provided.' :
-            healthStatus + " " + healthStatus2;
-        }
-        checkHealth();
-
-        const checkStatusMarital = () => this.married === 'Yes' ? 'You have married.' : 'You are single.';
-        checkStatusMarital();
-    }
+export const person = new Person();
+export const loadInfo = () => {
+    window.location.href = '/src/pages/home/game.html';
+    person.loadFromLocalStorage();
 }
+
+const btnSubmitForm = document.getElementById('btnSubmitForm');
+btnSubmitForm.addEventListener('click', function (e) {
+    e.preventDefault();
+    
+    setTimeout(() => {
+        btnSubmitForm.textContent = 'Receive and save datas to local storage...';
+        setTimeout(() => {
+            person.getValues();
+            person.saveToLocalStorage()
+            loadInfo();
+        }, 1000);
+    }, 500);
+});
