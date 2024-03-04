@@ -43,17 +43,6 @@ export class Person {
     saveToLocalStorage() {
         localStorage.setItem('User', JSON.stringify(this));
     }
-
-    // Load datas from local storage
-    loadFromLocalStorage() {
-        const data = JSON.parse(localStorage.getItem('User'));
-        console.log(data);
-        if (data) {
-            return new Person(data.fullName, data.userName, data.gender, data.age, data.money, data.workExp, data.health, data.married);
-        } else {
-            return null;
-        }
-    }
 }
 
 export const person = new Person();
