@@ -1,3 +1,5 @@
+import * as myModule from "./life.js";
+
 // Make function for go to work
 function goToWork(params) {
     
@@ -12,6 +14,22 @@ function goToBank(params) {
 function goMarry(params) {
     
 };
+
+// Make function for calculate balance
+function calculateBalance () {
+  money > 0 ? `You have a balance in your account of: ${input.money}.` : 'You are owing other expenses.'
+}
+
+
+// Make function for marry 
+function marryWithSomeone(params) {
+
+}
+
+// Make function for pay public services
+function payPublicServices(params) {
+
+}
 
 
 // let iconGenderDiv = document.getElementsByClassName('iconGender');
