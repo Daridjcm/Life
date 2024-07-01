@@ -12,8 +12,8 @@
                 <div class="flex flex-row bg-slate-200 w-full shadow-sm justify-end items-center gap-20 p-3">
                     <div class="flex flex-col">
                         <ul class="flex flex-row gap-10 text-xl">
-                            <li><span class="icon-[solar--health-broken] text-red-600"></span> Health: </li>
-                            <li><span class="icon-[streamline--money-wallet-money-payment-finance-wallet] text-green-500"></span> Money: </li>
+                            <li><span class="icon-[solar--health-broken] text-red-600"></span> Health: <p id="health">100</p></li>
+                            <li><span class="icon-[streamline--money-wallet-money-payment-finance-wallet] text-green-500"></span> Money: <p id="money">0</p></li>
                         </ul>
                     </div>
                     <div class="flex flex-row gap-1.5 items-center">
@@ -40,7 +40,7 @@
                 </aside>
                 <div class="flex flex-row p-4 gap-5">
                     <div class="bg-slate-200 rounded-lg shadow-md">
-                        <button class="bg-slate-100 rounded-md" type="submit" onclick="goToWork()">
+                        <button id="btnWork" class="bg-slate-100 rounded-md" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path fill="#753e1a" d="M4 19V8zm.615 1q-.69 0-1.152-.462Q3 19.075 3 18.385v-9.77q0-.69.463-1.152Q3.925 7 4.615 7H9V5.615q0-.69.463-1.152Q9.925 4 10.615 4h2.77q.69 0 1.153.463q.462.462.462 1.152V7h4.385q.69 0 1.152.463q.463.462.463 1.152v4.198q-.238-.151-.479-.264q-.24-.112-.521-.21V8.614q0-.269-.173-.442T19.385 8H4.615q-.269 0-.442.173T4 8.615v9.77q0 .269.173.442t.442.173h7.46q.056.275.12.515q.063.24.153.485zM10 7h4V5.615q0-.269-.173-.442T13.385 5h-2.77q-.269 0-.442.173T10 5.615zm8 15q-1.671 0-2.836-1.164T14 18q0-1.671 1.164-2.836T18 14q1.671 0 2.836 1.164T22 18q0 1.671-1.164 2.836T18 22m.385-4.162v-2.723h-.77v3.047l2.035 2.034l.546-.546z"/></svg> 
                         Go to work</button>
                     </div>
