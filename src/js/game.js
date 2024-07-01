@@ -1,7 +1,19 @@
 // Make function for go to work
-function goToWork(params) {
-    
+let health = document.getElementById('health'); 
+let money = document.getElementById('money');
+let btnGoWork = document.getElementById('btnWork');
+
+let eventBtnWork = btnGoWork.addEventListener('click', function() {
+    let money = Math.floor(Math.random() * 100) + 1;
+    let health = Math.floor(Math.random() * 100) + 1;
+    money.innerHTML = money;
+    health.innerHTML = health;
+})
+
+function goToWork(e) {
+    e = eventBtnWork;
 };
+goToWork(eventBtnWork)
 
 // Make function for go to bank
 function goToBank(params) {
