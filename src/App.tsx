@@ -1,7 +1,17 @@
-import React from 'react';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-const HomePage: React.FC = () => {
-  return <div>Welcome to my Next.js app!</div>;
-};
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head />
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
 
-export default HomePage;
+export default MyDocument;

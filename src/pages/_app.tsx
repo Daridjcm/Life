@@ -44,12 +44,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       }
     }
   };
-
+  
   return (
     <UserContext.Provider value={{ user, setUser, handleGoToWork, handleClearLocalStorage }}>
       <Component {...pageProps} />
     </UserContext.Provider>
   );
 }
+
 
 export default MyApp;
