@@ -5,7 +5,7 @@ interface UserContextType {
   setUser: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export const UserContext = createContext<UserContextType | undefined>(undefined);
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
 interface UserProviderProps {
   children: ReactNode;
@@ -27,3 +27,5 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
+export default UserContext;

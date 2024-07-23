@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from './_app';
+import { UserContext } from '../context/UserProvider';
 import { useRouter } from 'next/router';
 import BankModal from '../components/BankModal';
 
