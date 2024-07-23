@@ -1,9 +1,11 @@
 import CreateUser from "./CreateUser";
 
-export default function Home() {
+function Home() {
   return (
     <>
       <CreateUser />
     </>
   );
 }
+
+export default Home;

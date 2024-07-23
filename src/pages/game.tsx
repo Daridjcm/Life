@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../context/UserProvider';
+import { useRouter } from 'next/router';
+import BankModal from '../components/BankModal';
 
 const GamePage: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+  const context = useContext(UserContext);
+  const router = useRouter();
+  const [isBankModalOpen, setIsBankModalOpen] = useState(false);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('User');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (context && context.user === null) {
+      router.push('/CreateUser');
     }
-  }, []);
+  }, [context, router]);
 
-  if (!user) {
+  if (!context) {
+    throw new Error('GamePage must be used within a UserProvider');
+  }
+  
+  const { user, handleGoToWork, handleClearLocalStorage, setUser } = context;
+
+  if (user === null) {
     return <div>Loading...</div>;
   }
 
@@ -20,8 +30,8 @@ const GamePage: React.FC = () => {
         <div className="flex flex-row bg-slate-200 w-full shadow-sm justify-end items-center gap-20 p-3">
           <div className="flex flex-col">
             <ul className="flex flex-row gap-10 text-xl">
-              <li><span className="icon-[hugeicons--health]" /> Health: <p>{user.health}</p></li>
-              <li>Money: <p>{user.money}</p></li>
+              <li><span className="icon-[hugeicons--health]" /> Health: <p>{user.health ?? 'N/A'}</p></li>
+              <li>Money: <p>{user.money ?? 'N/A'}</p></li>
             </ul>
           </div>
           <div className="flex flex-row gap-1.5 items-center">
@@ -48,17 +58,28 @@ const GamePage: React.FC = () => {
         </aside>
         <div className="flex flex-row p-4 gap-5">
           <div className="bg-slate-200 rounded-lg shadow-md">
-            <button id="btnWork" className="bg-slate-100 rounded-md" type="button" onClick={() => alert('Go to work')}>
+            <button id="btnWork" className="bg-slate-100 p-2 rounded-md" type="button" onClick={handleGoToWork}>
               Go to work
             </button>
           </div>
           <div className="bg-slate-200 rounded-lg shadow-md">
-            <button className="bg-slate-100 rounded-md" type="button" onClick={() => alert('Go to bank')}>
+            <button className="bg-slate-100 p-2 rounded-md" type="button" onClick={() => setIsBankModalOpen(true)}>
               Go to bank
+            </button>
+          </div>
+          <div className="bg-slate-200 rounded-lg shadow-md">
+            <button className="bg-red-500 p-2 text-white rounded-md" type="button" onClick={handleClearLocalStorage}>
+              Delete user
             </button>
           </div>
         </div>
       </aside>
+      <BankModal
+        user={user}
+        setUser={setUser}
+        isOpen={isBankModalOpen}
+        onRequestClose={() => setIsBankModalOpen(false)}
+      />
     </div>
   );
 };
