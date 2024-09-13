@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#__next'); // Asegúrate de que esto apunta al id del elemento principal de tu aplicación
+Modal.setAppElement('#root'); // Asegúrate de que esto apunta al id del elemento principal de tu aplicación
 
-interface User {
-  money: number;
-}
-
-interface BankModalProps {
-  user: User;
-  setUser: (user: User) => void;
-  isOpen: boolean;
-  onRequestClose: () => void;
-}
-
-const BankModal: React.FC<BankModalProps> = ({ user, setUser, isOpen, onRequestClose }) => {
-  const [amount, setAmount] = useState<number>(0);
+const BankModal = ({ user, setUser, isOpen, onRequestClose }) => {
+  const [amount, setAmount] = useState(0);
 
   const handleDeposit = () => {
     const updatedUser = {
@@ -58,29 +47,5 @@ const BankModal: React.FC<BankModalProps> = ({ user, setUser, isOpen, onRequestC
     </Modal>
   );
 };
-
-const IndexPage: React.FC = () => {
-  const [user, setUser] = useState<User>({ money: 100 });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleGoToBank = () => {
-    setIsModalOpen(true);
-  };
-
-  return (
-    <div>
-      <h1>Banco</h1>
-      <p>Dinero: {user.money}</p>
-      <button onClick={handleGoToBank}>Ir al banco</button>
-      <BankModal
-        user={user}
-        setUser={setUser}
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-      />
-    </div>
-  );
-};
-
 
 export default BankModal;
