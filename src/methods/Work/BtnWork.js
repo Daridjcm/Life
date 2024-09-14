@@ -3,7 +3,7 @@ import useWorkHandler from './Work';
 
 const MyBtnWork = () => {
   const { handleGoToWork, isButtonDisabled, nextAvailableTime } = useWorkHandler();
-  const [remainingTime, setRemainingTime] = useState(null);
+  const [remainingTime, setRemainingTime] = useState(0);
 
   useEffect(() => {
     if (nextAvailableTime) {
@@ -12,11 +12,14 @@ const MyBtnWork = () => {
         const timeLeft = Math.max(nextAvailableTime - now, 0);
         setRemainingTime(timeLeft);
         if (timeLeft <= 0) {
+          setRemainingTime(0);
           clearInterval(interval);
         }
       }, 1000); // Actualiza cada segundo
 
       return () => clearInterval(interval);
+    } else {
+      setRemainingTime(0);
     }
   }, [nextAvailableTime]);
 
@@ -29,17 +32,18 @@ const MyBtnWork = () => {
 
   return (
     <>
-      <button onClick={handleGoToWork} disabled={isButtonDisabled} className='bg-gray-400 text-gray-300 p-2 rounded'>
-        Go to Work
-      </button>
+    <button
+      onClick={handleGoToWork}
+      disabled={isButtonDisabled}
+      className={`p-2 rounded text-gray-300 ${isButtonDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-400'}`}
+    >
+      Ir a trabajar
+    </button>
 
-      {/* Modal */}
       {isButtonDisabled && (
-        <div className='fixed bottom-0 right-0 m-4 p-4 bg-red-500 text-white rounded shadow-lg'>
-          <p>You need to wait before working again.</p>
-          {remainingTime !== null && (
-            <p>Time remaining: {formatTime(remainingTime)}</p>
-          )}
+        <div className='fixed bottom-0 right-0 m-4 p-4 bg-red-500 text-white rounded shadow-lg opacity-80'>
+          <p>Necesitas esperar para volver a trabajar.</p>
+          <p>Tiempo de espera: {formatTime(remainingTime)}</p>
         </div>
       )}
     </>

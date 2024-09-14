@@ -32,7 +32,7 @@ export default function AccessGame() {
   return (
     <div className='flex items-center justify-center h-screen text-center'>
       <h1 className='text-5xl text-blue-500 '>
-        {isRedirecting ? 'Redirecting game...' : `Welcome My Life, ${user.name || 'Guest'}!`}
+        {isRedirecting ? 'Redireccionando al juego...' : `Has regresado, ${user.name || 'Guest'}`}
       </h1>
     </div>
   );

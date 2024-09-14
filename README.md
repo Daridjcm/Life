@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# My Life
+**Nombre del Proyecto:** `myLife`
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Tipo de Proyecto:** Aplicación web interactiva
 
-## Available Scripts
+**Propósito:** `myLife` es una aplicación web diseñada para simular una vida virtual. Permite a los usuarios crear un perfil, gestionar recursos y participar en actividades simuladas, como trabajar y manejar finanzas. 
 
-In the project directory, you can run:
+### Estructura del Proyecto
 
-### `npm start`
+- **`📁public`**:
+`Coming Soon`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **`📁src`**:
+  - **`📁css`**:
+    - Archivos de estilo para la aplicación, incluyendo `index.css` y `output.css`. Es recomendable consolidar estos archivos en una sola carpeta para mantener la organización.
+  
+  - **`📁methods`**:
+    - **`📁Bank`**:
+      - Contiene componentes relacionados con la funcionalidad bancaria, como `BankActions.js`, `RespModal.js`, y `TransactionHistory.js`.
+      - `BankModal.js` es el componente principal del modal del banco.
+  
+    - **`📁Work`**:
+      - Contiene componentes relacionados con la funcionalidad de trabajo. Los archivos relevantes incluyen `BtnWork.js` y `Work.js`.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  - **`📁pages`**:
+    - Contiene los componentes de las páginas principales de la aplicación:
+      - `accessGame.js`: Página para acceder al juego.
+      - `Game.js`: Página principal del juego.
+      - `UserForm.js`: Página para el formulario del usuario.
+      - `Welcome.js`: Página de bienvenida.
+  
+  - **`index.js`**:
+    - Archivo de entrada principal de la aplicación.
 
-### `npm test`
+- **Archivos de Configuración**:
+  - **`postcss.config.js`** y **`postcss.config.mjs`**: Archivos de configuración para PostCSS.
+  - **`tailwind.config.js`** y **`tailwind.config.ts`**: Archivos de configuración para Tailwind CSS. Asegúrate de utilizar el formato correcto según el lenguaje que prefieras.
+  - **`tsconfig.json`**: Archivo de configuración para TypeScript, si estás usando TypeScript en el proyecto.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Archivos del Proyecto**:
+  - **`README.md`**: Documento de descripción y guía del proyecto.
+  - **`.gitignore`**: Archivo para especificar qué archivos o carpetas deben ser ignorados por Git.
+  - **`package.json`** y **`package-lock.json`**: Archivos de configuración para las dependencias y scripts del proyecto.
 
-### `npm run build`
+### Características
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Gestión del Perfil del Usuario**: Los usuarios pueden crear y gestionar su perfil, incluyendo la administración de recursos y finanzas.
+  
+2. **Interacción con el Banco**: La aplicación incluye un modal bancario (`BankModal`) que permite a los usuarios retirar, depositar, y prestar dinero. También mantiene un historial de transacciones y permite la gestión de deudas.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Simulación de Trabajo**: Los usuarios pueden realizar trabajos virtuales, que afectan su saldo y progreso en el juego.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. **Interfaz de Usuario**: Utiliza React para la construcción de la interfaz y Tailwind CSS para el diseño responsivo.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5. **Persistencia de Datos**: La aplicación utiliza `localStorage` y `sessionStorage` para almacenar información del usuario y transacciones.

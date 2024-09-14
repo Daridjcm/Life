@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import BankModal from '../methods/BankModal';
-import MyBtnWork from '../methods/BtnWork';
+import BankModal from '../methods/Bank/BankModal';
+import MyBtnWork from '../methods/Work/BtnWork';
 
 export default function Game() {
   const [user, setUser] = useState(() => {
@@ -56,10 +56,10 @@ export default function Game() {
           <div className="flex flex-col">
             <ul className="flex flex-row gap-10 text-xl">
               <li>
-                <span className="icon-[hugeicons--health]" /> Health: <p>{user.health ?? 'N/A'}</p>
+                <span className="icon-[hugeicons--health]" /> Salud: <p>{user.health ?? 'N/A'}</p>
               </li>
               <li>
-                Money: <p>{user.money ?? 'N/A'}</p>
+                Dinero: <p>{user.money ?? 'N/A'}</p>
               </li>
             </ul>
           </div>
@@ -82,17 +82,17 @@ export default function Game() {
             src="https://i.pinimg.com/564x/6a/ed/90/6aed90bd19661b5d17fdeafa201cac5f.jpg"
             alt="Icon Profile"
           />
-          <h1 className="text-3xl p-auto">Profile</h1>
+          <h1 className="text-3xl p-auto">Perfil</h1>
           <div
             className="flex flex-col justify-center bg-slate-200 m-auto w-3/4 h-1/4 p-2 rounded-md shadow-md"
             id="infoUser"
           >
             <ul>
-              <li className="pb-3">Name: {user.name}</li>
-              <li className="pb-3">Age: {user.age}</li>
-              <li className="pb-3">Work Experience: {user.workExp}</li>
-              <li className="pb-3">Gender: <span className="iconGender">{user.gender}</span></li>
-              <li className="pb-3">Marital Status: {user.maritalStatus}</li>
+              <li className="pb-3">Nombre: {user.name}</li>
+              <li className="pb-3">Edad: {user.age}</li>
+              <li className="pb-3">Experiencia laboral: {user.workExp}</li>
+              <li className="pb-3">Sexo: <span className="iconGender">{user.gender}</span></li>
+              <li className="pb-3">Estado Civil: {user.maritalStatus}</li>
             </ul>
           </div>
         </aside>
@@ -106,7 +106,7 @@ export default function Game() {
               type="button"
               onClick={handleGoToBank}
             >
-              Go to bank
+              Ir al banco
             </button>
           </div>
           <div className="bg-slate-200 rounded-lg shadow-md">
@@ -115,7 +115,7 @@ export default function Game() {
               type="button"
               onClick={handleClearLocalStorage}
             >
-              Delete user
+              Eliminar datos
             </button>
           </div>
         </div>
