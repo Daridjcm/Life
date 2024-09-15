@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import accessGame from './accessGame';
+import {renderContent} from './Welcome';
 
 function UserForm() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,8 @@ function UserForm() {
     workExp: 0,
     health: 100,
     money: 0,
+    hoursPerDay: 0,
+    debtAmount: 0,
     ClickCount: 0,
     LastWorkTime: 0,
   });
@@ -127,6 +130,7 @@ function UserForm() {
             <button
               type="submit"
               className="w-full bg-blue-500 text-white p-2 rounded-md"
+              onClick={renderContent}
             >
               Completar registro
             </button>

@@ -1,3 +1,4 @@
+// Work.js
 import { useState, useEffect } from 'react';
 
 const useWorkHandler = () => {
@@ -21,6 +22,8 @@ const useWorkHandler = () => {
       money: 0,
       ClickCount: 0,
       LastWorkTime: 0,
+      hoursPerDay: 0,
+      debtAmount: 0, // Agregar esta propiedad si no está ya en el objeto
     };
   });
 
@@ -32,12 +35,12 @@ const useWorkHandler = () => {
     const lastWorkTime = parseInt(userProfile.LastWorkTime || '0', 10);
     const hoursPassed = (now - lastWorkTime) / (1000 * 60 * 60);
 
-    if (userProfile.ClickCount >= 6) {
+    if (userProfile.ClickCount >= 8) {
       if (hoursPassed >= 12) {
         setIsButtonDisabled(false);
         setUserProfile(prev => ({
           ...prev,
-          ClickCount: 0, // Reset ClickCount
+          ClickCount: 0,
           LastWorkTime: now.toString(),
         }));
         localStorage.setItem('userProfile', JSON.stringify({
@@ -66,7 +69,7 @@ const useWorkHandler = () => {
           setNextAvailableTime(null);
           clearInterval(interval);
         } else {
-          setNextAvailableTime(nextAvailableTime); // Update nextAvailableTime to ensure the interval continues to work correctly
+          setNextAvailableTime(nextAvailableTime); // Ensure interval updates correctly
         }
       }, 1000); // Actualiza cada segundo
 
@@ -77,23 +80,38 @@ const useWorkHandler = () => {
   const handleGoToWork = () => {
     if (userProfile) {
       const now = new Date().getTime();
-      const hoursPerDay = userProfile.hoursPerDay || 0;
       const maxHoursPerDay = 8;
       const moneyPerHour = 5;
 
-      if (hoursPerDay < maxHoursPerDay && !isButtonDisabled) {
+      if (userProfile.hoursPerDay < maxHoursPerDay && !isButtonDisabled) {
+        let newMoney = userProfile.money + moneyPerHour;
+        let newDebtAmount = userProfile.debtAmount;
+
+        // Deduce money for debts if any
+        if (newDebtAmount > 0) {
+          if (newMoney >= newDebtAmount) {
+            newMoney -= newDebtAmount; // Pay off debt
+            newDebtAmount = 0; // Clear debt
+          } else {
+            newDebtAmount -= newMoney; // Reduce debt by remaining money
+            newMoney = 0; // All money is used to pay debt
+          }
+        }
+
         const updatedProfile = {
           ...userProfile,
-          money: userProfile.money + moneyPerHour,
-          hoursPerDay: hoursPerDay + 1,
+          money: newMoney,
+          debtAmount: newDebtAmount,
+          hoursPerDay: userProfile.hoursPerDay + 1,
           ClickCount: (userProfile.ClickCount || 0) + 1,
           LastWorkTime: now.toString(), // Actualizar la hora del último trabajo
         };
+
         setUserProfile(updatedProfile);
         localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
 
-        // Si se alcanzaron los 6 clics, bloquear el botón
-        if (updatedProfile.ClickCount >= 6) {
+        // Si se alcanzaron los 8 clics, bloquear el botón
+        if (updatedProfile.ClickCount >= 8) {
           setIsButtonDisabled(true);
           const nextAvailable = now + (12 * 60 * 60 * 1000); // 12 hours in milliseconds
           setNextAvailableTime(nextAvailable);
@@ -106,7 +124,7 @@ const useWorkHandler = () => {
     }
   };
 
-  return { handleGoToWork, isButtonDisabled, nextAvailableTime };
+  return { handleGoToWork, isButtonDisabled, nextAvailableTime, userProfile };
 };
 
 export default useWorkHandler;

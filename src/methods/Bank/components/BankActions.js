@@ -4,18 +4,18 @@ export const BankActions = ({ user, setUser, amount, setResponseMessage, setIsRe
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    const savedTransactions = JSON.parse(sessionStorage.getItem('transactions')) || [];
+    const savedTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
     setTransactions(savedTransactions);
   }, []);
 
-  const updateSessionStorage = (updatedUser, newTransaction) => {
+  const updatelocalStorage = (updatedUser, newTransaction) => {
     setUser(updatedUser);
-    sessionStorage.setItem('User', JSON.stringify(updatedUser));
+    localStorage.setItem('userProfile', JSON.stringify(updatedUser));
 
     // Evita duplicar las transacciones
     const updatedTransactions = [...transactions, newTransaction];
     setTransactions(updatedTransactions);
-    sessionStorage.setItem('transactions', JSON.stringify(updatedTransactions));
+    localStorage.setItem('transactions', JSON.stringify(updatedTransactions));
   };
 
   const handleWithdraw = () => {
@@ -24,7 +24,7 @@ export const BankActions = ({ user, setUser, amount, setResponseMessage, setIsRe
         ...user,
         money: user.money - amount,
       };
-      updateSessionStorage(updatedUser, `Retirado: $${amount}`);
+      updatelocalStorage(updatedUser, `Retirado: $${amount}`);
     } else {
       setResponseMessage('No tienes suficiente dinero para retirar.');
       setIsResponseModalOpen(true);
@@ -37,7 +37,7 @@ export const BankActions = ({ user, setUser, amount, setResponseMessage, setIsRe
       money: user.money + amount,
       debtAmount: (user.debtAmount || 0) + amount,
     };
-    updateSessionStorage(updatedUser, `El banco te ha prestado: $${amount}`);
+    updatelocalStorage(updatedUser, `El banco te ha prestado: $${amount}`);
   };
 
   const handlePayBack = () => {
@@ -55,7 +55,7 @@ export const BankActions = ({ user, setUser, amount, setResponseMessage, setIsRe
         money: Math.max(user.money - 5, 0),
         debtAmount: debtAmount + 5,
       };
-      updateSessionStorage(updatedUser, `Monto insuficiente para pagar. Se ha aplicado una multa de 5 dólares.`);
+      updatelocalStorage(updatedUser, `Monto insuficiente para pagar. Se ha aplicado una multa de 5 dólares.`);
       setResponseMessage('Monto insuficiente para pagar. Se ha aplicado una multa de 5 dólares.');
       setIsResponseModalOpen(true);
       return;
@@ -67,14 +67,14 @@ export const BankActions = ({ user, setUser, amount, setResponseMessage, setIsRe
         money: user.money - amount,
         debtAmount: 0,
       };
-      updateSessionStorage(updatedUser, `Deuda pagada: $${amount}`);
+      updatelocalStorage(updatedUser, `Deuda pagada: $${amount}`);
     } else {
       const updatedUser = {
         ...user,
         money: Math.max(user.money - 5, 0),
         debtAmount: debtAmount + 5,
       };
-      updateSessionStorage(updatedUser, `No tienes suficiente dinero para pagar. Se ha aplicado una multa de 5 dólares.`);
+      updatelocalStorage(updatedUser, `No tienes suficiente dinero para pagar. Se ha aplicado una multa de 5 dólares.`);
       setResponseMessage('No tienes suficiente dinero para pagar. Se ha aplicado una multa de 5 dólares.');
       setIsResponseModalOpen(true);
     }

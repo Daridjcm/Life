@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import UserForm from './UserForm';
 import Game from './Game';
 
+let showGame1;
 function Welcome() {
   const isRegistered = localStorage.getItem('userProfile') !== null;
   const [showGame, setShowGame] = useState(false);
+  showGame1 = showGame;
 
   useEffect(() => {
     if (isRegistered) {
@@ -17,18 +19,12 @@ function Welcome() {
     }
   }, [isRegistered]);
 
-  const renderContent = () => {
-    if (showGame) {
-      return <Game />;
-    }
-    return <UserForm />;
-  };
-
-  return (
-    <div id="Game">
-      {renderContent()}
-    </div>
-  );
 }
 
+export const renderContent = () => {
+  if (showGame1) {
+    return <Game />;
+  }
+  return <UserForm />;
+};
 export default Welcome;

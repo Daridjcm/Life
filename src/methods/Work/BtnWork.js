@@ -1,8 +1,9 @@
+// MyBtnWork.js
 import React, { useState, useEffect } from 'react';
 import useWorkHandler from './Work';
 
 const MyBtnWork = () => {
-  const { handleGoToWork, isButtonDisabled, nextAvailableTime } = useWorkHandler();
+  const { handleGoToWork, isButtonDisabled, nextAvailableTime, userProfile } = useWorkHandler();
   const [remainingTime, setRemainingTime] = useState(0);
 
   useEffect(() => {
@@ -31,14 +32,19 @@ const MyBtnWork = () => {
   };
 
   return (
-    <>
-    <button
-      onClick={handleGoToWork}
-      disabled={isButtonDisabled}
-      className={`p-2 rounded text-gray-300 ${isButtonDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-400'}`}
-    >
-      Ir a trabajar
-    </button>
+    <div className='text-center'>
+      <button
+        onClick={handleGoToWork}
+        disabled={isButtonDisabled}
+        className={`p-2 rounded text-gray-300 ${isButtonDisabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-400'}`}
+      >
+        Ir a trabajar
+      </button>
+
+      <div className='mt-2 pl-2 pr-2 mb-2' id='moneyWon'>
+        <p>Dinero ${userProfile.money}</p>
+        {/* <p>Energia: {userProfile.energy}</p> */}
+      </div>
 
       {isButtonDisabled && (
         <div className='fixed bottom-0 right-0 m-4 p-4 bg-red-500 text-white rounded shadow-lg opacity-80'>
@@ -46,7 +52,7 @@ const MyBtnWork = () => {
           <p>Tiempo de espera: {formatTime(remainingTime)}</p>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

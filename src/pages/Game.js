@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BankModal from '../methods/Bank/BankModal';
-import MyBtnWork from '../methods/Work/BtnWork';
+import MyBtnWork  from '../methods/Work/BtnWork';
 
 export default function Game() {
   const [user, setUser] = useState(() => {
@@ -12,7 +12,7 @@ export default function Game() {
         console.error('Error parsing user data from localStorage:', e);
       }
     }
-    return { money: 0, health: 'N/A', userName: 'N/A', name: 'N/A', age: 'N/A', workExp: 'N/A', gender: 'N/A', married: 'N/A' };
+    return { money: 0, health: 100, userName: 'N/A', name: 'N/A', age: 'N/A', workExp: 'N/A', gender: 'N/A', maritalStatus: 'N/A' };
   });
   const [isBankModalOpen, setIsBankModalOpen] = useState(false);
 
@@ -26,7 +26,7 @@ export default function Game() {
           console.error('Error parsing user data from localStorage:', e);
         }
       } else {
-        setUser({ money: 0, health: 'N/A', userName: 'N/A', name: 'N/A', age: 'N/A', workExp: 'N/A', gender: 'N/A', married: 'N/A' });
+        setUser({ money: 0, health: 100, userName: 'N/A', name: 'N/A', age: 'N/A', workExp: 'N/A', gender: 'N/A', maritalStatus: 'N/A' });
       }
     };
 
@@ -43,9 +43,10 @@ export default function Game() {
 
   const handleClearLocalStorage = () => {
     localStorage.removeItem('userProfile');
-    setUser({ money: 0, health: 'N/A', userName: 'N/A', name: 'N/A', age: 'N/A', workExp: 'N/A', gender: 'N/A', married: 'N/A' });
+    localStorage.removeItem('User');
+    setUser({ money: 0, health: 0, userName: 'N/A', name: 'N/A', age: 'N/A', workExp: 'N/A', gender: 'N/A', maritalStatus: 'N/A' });
     setTimeout(() => {
-        window.location.href = './UserForm.js'
+      window.location.href = './UserForm.js'
     }, 2000)
   };
 
@@ -56,10 +57,10 @@ export default function Game() {
           <div className="flex flex-col">
             <ul className="flex flex-row gap-10 text-xl">
               <li>
-                <span className="icon-[hugeicons--health]" /> Salud: <p>{user.health ?? 'N/A'}</p>
+                <span className="icon-[hugeicons--health] text-red-700" /> Salud: <p className='text-red-700'>{user.health ?? 'N/A'}</p>
               </li>
               <li>
-                Dinero: <p>{user.money ?? 'N/A'}</p>
+                <span className="icon-[hugeicons--money-add-02] text-green-700"/> Dinero: <p className='text-green-700'>${user.money ?? 'N/A'}</p>
               </li>
             </ul>
           </div>
@@ -91,30 +92,46 @@ export default function Game() {
               <li className="pb-3">Nombre: {user.name}</li>
               <li className="pb-3">Edad: {user.age}</li>
               <li className="pb-3">Experiencia laboral: {user.workExp}</li>
-              <li className="pb-3">Sexo: <span className="iconGender">{user.gender}</span></li>
-              <li className="pb-3">Estado Civil: {user.maritalStatus}</li>
+              <li className="pb-3">
+                Género:
+                <span className={`${user.gender === 'Femenina' ? 'text-pink-700 pl-1' : user.gender === 'Masculino' ? 'text-blue-700 pl-1' : 'text-cyan-700'}`}>
+                  <span className={`${user.gender === 'Femenina' ? 'icon-[ph--gender-female-bold]' : user.gender === 'Masculino' ? 'icon-[ph--gender-male-bold]' : user.gender === 'Otro' ? 'icon-[ph--gender-intersex]' : '' }`}/> {user.gender}
+                </span>
+              </li>
+              <li className="pb-3">
+              Estado Civil: 
+              <span className={`${user.maritalStatus === 'Casado/a' ? 'text-[#e11d48] pl-1' : ''} ${user.maritalStatus === 'Soltero/a' ? 'text-[#e11d48] pl-1' : ''} ${user.maritalStatus === 'Divorciado/a' ? 'text-[#e11d48] pl-1' : ''}${user.maritalStatus === 'Viudo/a' ? 'text-gray-700 pl-1' : 'pl-1'}`}>
+                <span 
+                  className={`iconGender ${user.maritalStatus === 'Casado/a' ? 'icon-[emojione-monotone--wedding]' 
+                  : user.maritalStatus === 'Soltero/a' ? 'icon-[emojione-monotone--kiss-mark]' 
+                  : user.maritalStatus === 'Divorciado/a' ? 'icon-[emojione-monotone--broken-heart]' 
+                  : user.maritalStatus === 'Viudo/a' ? 'icon-[emojione-monotone--funeral-urn]' 
+                  : ''}`}/> {user.maritalStatus}
+              </span>
+            </li>
             </ul>
           </div>
         </aside>
         <div className="flex flex-row p-4 gap-5">
           <div className="bg-slate-200 rounded-lg shadow-md">
+            <img src='../assets/images/Work.jpg' alt='Work'/>
             <MyBtnWork />
           </div>
           <div className="bg-slate-200 rounded-lg shadow-md">
+            <img src='../assets/images/Bank.jpg' alt='Bank'/>
             <button
-              className="bg-slate-100 p-2 rounded-md"
+              className="bg-slate-100 p-2 rounded-md flex items-center"
               type="button"
-              onClick={handleGoToBank}
-            >
+              onClick={handleGoToBank}>
               Ir al banco
             </button>
           </div>
+
           <div className="bg-slate-200 rounded-lg shadow-md">
             <button
-              className="bg-red-500 p-2 text-white rounded-md"
+              className="bg-red-500 p-2 text-white rounded-md flex items-center"
               type="button"
-              onClick={handleClearLocalStorage}
-            >
+              onClick={handleClearLocalStorage}>
               Eliminar datos
             </button>
           </div>
